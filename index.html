@@ -6,7 +6,11 @@
 <meta name="apple-mobile-web-app-title" content="ENLACE">
 <meta name="robots" content="noindex,nofollow">
 <title>ENLACE</title>
-<link rel="manifest" href="manifest.webmanifest">
+<script>
+// iPhone/iPad: sin manifest, para que el ícono guarde el link completo con ?t= (con manifest iOS abre la página sin el link).
+(function(){var ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if(!ios)document.write('<link rel="manifest" href="manifest.webmanifest">');})();
+</script>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -25,7 +29,7 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
   try{ if(t) localStorage.setItem(K,t); else t=localStorage.getItem(K); }catch(e){}
   if(!t){
     document.getElementById('sp').remove();
-    document.body.innerHTML='<div id="m">Falta tu link personal. Pídeselo a tu encargado.<br><br>Your personal link is missing. Ask your supervisor.</div>';
+    document.body.innerHTML='<div id="m">Falta tu link personal. Borra este ícono, abre en Safari el link que te mandaron por WhatsApp y vuelve a agregarlo a la pantalla de inicio.<br><br>Your personal link is missing. Delete this icon, open the link we sent you on WhatsApp in Safari, and add it to your Home Screen again.</div>';
     return;
   }
   // Si abrió sin ?t (ícono de Android), deja la dirección con su link para que el ícono lo recuerde.
