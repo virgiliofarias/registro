@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jarvis</title>
+<meta name="theme-color" content="#05070a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  html,body{margin:0;height:100%;background:#05070a;color:#d6e6f2;font:16px/1.45 system-ui,-apple-system,Roboto,sans-serif;overflow:hidden}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#05070a}
+  .aviso{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
+  .aviso img{width:120px;height:120px;border-radius:50%}
+  .aviso b{font-size:20px;color:#fff}
+  .aviso button{padding:12px 22px;border-radius:12px;border:0;background:#cfe9ff;color:#05070a;font:700 15px system-ui}
+</style>
+</head>
+<body>
+<!-- Envoltorio público de Jarvis (solo el ícono y este marco). Jarvis vive en la laptop de Virgilio y se abre
+     por su red privada (Tailscale). La llave NO está aquí: se guarda en este teléfono la primera vez. -->
+<div class="aviso" id="aviso"><img src="icon-192.png" alt=""><b id="msg">Prende Tailscale en tu celular</b>
+  <span id="sub">Jarvis vive en tu laptop y se abre por tu red privada.</span><button onclick="location.reload()">Reintentar</button></div>
+<script>
+  var LAP = 'https://gridlink.tail263765.ts.net';
+  var q = new URLSearchParams(location.search), t = q.get('t');
+  try { if (t) { localStorage.setItem('jt', t); history.replaceState(null, '', location.pathname); } else { t = localStorage.getItem('jt'); } } catch (e) {}
+  function aviso(m, s) { document.getElementById('msg').textContent = m; if (s) document.getElementById('sub').textContent = s; document.getElementById('aviso').style.display = 'flex'; }
+  if (!t) { aviso('Falta tu enlace de Jarvis', 'Abre una vez el enlace completo que te mandaron (el que termina en ?t=…).'); }
+  else {
+    // ¿se llega a la laptop? (si Tailscale está apagado, esto falla)
+    fetch(LAP + '/icono-192.png?r=' + Date.now(), {mode: 'no-cors', cache: 'no-store'}).then(function () {
+      var f = document.createElement('iframe');
+      f.allow = 'microphone; autoplay; clipboard-write';
+      f.src = LAP + '/?t=' + encodeURIComponent(t) + '#jarvis';
+      document.body.appendChild(f);
+    }).catch(function () { aviso('Prende Tailscale en tu celular', 'Y revisa que la laptop esté prendida. Luego toca Reintentar.'); });
+  }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
+</body>
+</html>
