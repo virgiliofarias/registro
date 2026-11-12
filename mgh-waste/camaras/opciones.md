@@ -32,3 +32,12 @@ Fecha de búsqueda: 2026-11-12. Precios en dólares, de tiendas en Estados Unido
   https://www.amazon.com/dp/B0H7RWBZJ9
 
 Se descartaron BlackVue (sin existencias) y Garmin Dash Cam Live (no graba la cabina).
+
+## Cámara frontal + trasera (revisado el 2026-11-12)
+Las dos opciones de arriba graban frente + cabina, NO tienen cámara trasera.
+
+- REDTIGER VS10 4G LTE — frente 2.5K + trasera 1080p, chip AT&T incluido (6 meses de prueba), app OnaGo, kit de cableado incluido.
+  Cable de la cámara trasera: 21.3 pies (6.5 m).
+  https://www.amazon.com/dp/B0FC2GMRJH
+- Para un camión largo, 6.5 m puede no alcanzar. Antes de comprar: medir del parabrisas a donde va la cámara trasera
+  y preguntar a REDTIGER por un cable más largo para el VS10 (no se encontró uno confirmado para este modelo).
