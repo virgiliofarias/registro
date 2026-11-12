@@ -24,3 +24,10 @@ Fecha de búsqueda: 2026-11-12. Precios en dólares, de tiendas en EE. UU.; hay 
 - BlackVue Cloud (planes): https://www.thedashcamstore.com/pages.php?pageid=123
 - Samsara cámaras México: https://www.samsara.com/mx/pages/dash-cams
 - Samsara CM32 (ficha): https://www.samsara.com/pdf/docs/MX/CM32-Datasheet-MX.pdf
+
+## Enlaces de Amazon (revisados el 2026-11-12)
+- BlackVue DR970X Box-2CH IR Plus (camino + cabina): https://www.amazon.com/BlackVue-DR970X-Box-2CH-Channel-built/dp/B0HKB23JWF — no disponible por ahora
+- BlackVue DR970X Box-2CH IR Plus 64GB: https://www.amazon.com/Box-2CH-Channel-Dashcam-Recording-Optional/dp/B0CSJWCSQ5 — no disponible por ahora
+- Módulo LTE de BlackVue: https://www.amazon.com/Blackvue-DR970X-2CH-64-PL-CB-BLACKVUE-CONNECTIVITY-MODULE/dp/B0D32XFYCY — no disponible por ahora
+- BlackVue DR970X-2CH Plus + módulo CM100G LTE (camino + trasera, no cabina): https://www.amazon.com/BlackVue-DR970X-2CH-External-2-Channel-4K-Full/dp/B0F5PJ7PH9
+- Búsqueda de Nexar en Amazon: https://www.amazon.com/nexar-dashcam/s?k=nexar+dashcam
