@@ -41,3 +41,11 @@ Las dos opciones de arriba graban frente + cabina, NO tienen cámara trasera.
   https://www.amazon.com/dp/B0FC2GMRJH
 - Para un camión largo, 6.5 m puede no alcanzar. Antes de comprar: medir del parabrisas a donde va la cámara trasera
   y preguntar a REDTIGER por un cable más largo para el VS10 (no se encontró uno confirmado para este modelo).
+
+## Distancia al fondo del camión: ~10 m (dato del usuario, 2026-11-12)
+- REDTIGER VS10: su cable de 6.5 m NO alcanza. Necesitaría extensión de 4 pines; no está confirmado que funcione con el VS10.
+- Recomendada: BlackVue DR970X-2CH LTE Plus II (frente + trasera, 4G integrado, USD 540.99 en tienda oficial)
+  https://blackvuenorthamerica.com/products/blackvue-dr970x-2ch-lte-plus-ii-dual-lens-4k-gps-wifi-dash-cam-w-built-in-4g-lte-for-front-rear
+  + cable oficial largo para camión (BlackVue vende de 10 m y 15 m; el de 15 m cuesta USD 28.99)
+  https://shop.blackvue.com/product/external-camera-waterproof-coaxial-cable/
+  Pendiente: confirmar con BlackVue qué cable le queda a la versión "Series II" y que haya existencias.
