@@ -22,7 +22,7 @@ Fecha de búsqueda: 2026-11-12. Precios en dólares, de tiendas en Estados Unido
 - Nexar Beam4: https://www.getnexar.com/products/beam-4
 - BlackVue DR970X-BOX IR Plus: https://reach.dog/shop/blackvue-north-america/products/blackvue-dr970x-box-ir-2-channel-4k-dash-cam-for-front-interior
 - BlackVue Cloud (planes): https://www.thedashcamstore.com/pages.php?pageid=123
-- Samsara cámaras: https://www.samsara.com/products/telematics/dash-cams/
+- Samsara: https://www.samsara.com
 
 ## Enlaces de Amazon (revisados el 2026-11-12)
 - BlackVue DR970X Box-2CH IR Plus (camino + cabina): https://www.amazon.com/BlackVue-DR970X-Box-2CH-Channel-built/dp/B0HKB23JWF — no disponible por ahora
