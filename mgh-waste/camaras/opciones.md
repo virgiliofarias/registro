@@ -59,3 +59,12 @@ Las dos opciones de arriba graban frente + cabina, NO tienen cámara trasera.
 | 70mai A510 + kit 4G UP05 | 1944p / 1080p | Kit incluido (solo chip AT&T) | USD 100.79 | https://www.amazon.com/dp/B0DJFXNBYF |
 | Thinkware U3000 PRO + módulo LTE | 4K / 2K | Módulo incluido, 3 años de plan básico | USD 544.88 | https://www.amazon.com/dp/B0G4BGBKRJ |
 | BlackVue DR970X-2CH LTE Plus II | 4K / 1080p | Integrado | USD 540.99 | Tienda oficial BlackVue |
+
+## Presupuesto: ~USD 150 máximo (dato del usuario, 2026-11-12)
+Thinkware (USD 544.88) y BlackVue (USD 540.99) quedan descartadas por precio.
+
+| Cámara | Precio cámara | Datos 4G | Total aprox. a la entrada | Enlace |
+|---|---|---|---|---|
+| 70mai A510 + kit 4G UP05 | USD 100.79 (kit incluido) | Chip propio AT&T o compatible; un usuario reporta Tello 5 GB por USD 10/mes | ~USD 101 | https://www.amazon.com/dp/B0DJFXNBYF |
+| REDTIGER VS10 | USD 99.99–110.98 | Chip AT&T incluido, 6 meses de prueba; después plan de REDTIGER | ~USD 100–111 | https://www.amazon.com/dp/B0FC2GMRJH |
+| 70mai A810 Lite + kit 4G | USD 89.98 + kit 4G ~USD 60–66 | Chip propio | ~USD 150–156 | https://www.amazon.com/dp/B0GTTTW5XH |
