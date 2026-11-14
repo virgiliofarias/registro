@@ -72,7 +72,7 @@ async function intentar(clave,guardar){const m=document.getElementById("msgc");i
  try{const D=await descifrar(clave.trim().toUpperCase());if(guardar){try{localStorage.setItem("misalud-clave",clave.trim().toUpperCase())}catch(e){}}new Function("D",D.code)(D.data)}
  catch(e){if(m)m.textContent="Clave incorrecta.";try{localStorage.removeItem("misalud-clave")}catch(e){}}}
 document.getElementById("abrir").onclick=()=>intentar(document.getElementById("clave").value,document.getElementById("recordar").checked);
-(()=>{let g=null;try{g=localStorage.getItem("misalud-clave")}catch(e){}if(g)intentar(g,false)})();
+(()=>{const h=decodeURIComponent((location.hash||"").slice(1));if(/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/i.test(h)){history.replaceState(null,"",location.pathname);intentar(h,true);return}let g=null;try{g=localStorage.getItem("misalud-clave")}catch(e){}if(g)intentar(g,false)})();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 
 </script></body></html>
