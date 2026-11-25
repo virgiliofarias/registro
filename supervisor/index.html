@@ -1,0 +1,46 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B1A2E">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SUPERVISOR">
+<meta name="robots" content="noindex,nofollow">
+<title>SUPERVISOR</title>
+<script>
+// iPhone/iPad: sin manifest, para que el ícono guarde el link completo con ?s= (con manifest iOS abre la página sin el link).
+(function(){var ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if(!ios)document.write('<link rel="manifest" href="manifest.webmanifest">');})();
+</script>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+html,body{margin:0;height:100%;background:#0B1A2E;overflow:hidden}
+iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;border:0;width:100%;height:calc(100% - env(safe-area-inset-top,0px))}
+#m{color:#fff;font:17px system-ui,sans-serif;padding:28px;line-height:1.5}
+#sp{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#0B1A2E;color:#fff;font:600 22px system-ui,sans-serif;letter-spacing:.3em;transition:opacity .4s}
+#sp i{width:46px;height:46px;border-radius:50%;border:4px solid rgba(56,225,255,.25);border-top-color:#38E1FF;animation:g .9s linear infinite}
+@keyframes g{to{transform:rotate(360deg)}}
+</style></head><body>
+<div id="sp"><i></i>SUPERVISOR</div>
+<script>
+(function(){
+  var BASE='https://script.google.com/macros/s/AKfycbzAej01sV-XGx3SDu5-0JqDROALEgcj3U56T3j1QAeGR5ucR3FyUwLVVp3pxVAB95YG/exec';
+  var q=new URLSearchParams(location.search), t=q.get('s'), K='enlace_sup';
+  try{ if(t) localStorage.setItem(K,t); else t=localStorage.getItem(K); }catch(e){}
+  if(!t){
+    document.getElementById('sp').remove();
+    document.body.innerHTML='<div id="m">Falta tu link de supervisor. Borra este ícono, abre otra vez el link que te mandaron por WhatsApp y vuelve a instalarlo.</div>';
+    return;
+  }
+  // Si abrió sin ?t (ícono de Android), deja la dirección con su link para que el ícono lo recuerde.
+  if(!q.get('s')){ try{ history.replaceState(null,'','?s='+encodeURIComponent(t)); }catch(e){} }
+  var f=document.createElement('iframe');
+  f.src=BASE+'?sup='+encodeURIComponent(t);
+  f.allow='geolocation *; camera *; microphone *; clipboard-write *';
+  f.setAttribute('allowfullscreen','');
+  var sp=document.getElementById('sp'), quita=function(){ if(sp){sp.style.opacity=0; setTimeout(function(){sp&&sp.remove();sp=null},450);} };
+  f.onload=function(){ setTimeout(quita,1200) }; setTimeout(quita,12000);
+  document.body.appendChild(f);
+})();
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
+</script></body></html>
