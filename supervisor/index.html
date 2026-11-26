@@ -20,6 +20,13 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
 #sp{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#0B1A2E;color:#fff;font:600 22px system-ui,sans-serif;letter-spacing:.3em;transition:opacity .4s}
 #sp i{width:46px;height:46px;border-radius:50%;border:4px solid rgba(56,225,255,.25);border-top-color:#38E1FF;animation:g .9s linear infinite}
 @keyframes g{to{transform:rotate(360deg)}}
+#ins{position:fixed;inset:0;z-index:5;background:#0B1A2E;color:#fff;font:17px/1.45 system-ui,sans-serif;padding:calc(env(safe-area-inset-top,0px) + 26px) 22px 22px;overflow:auto}
+#ins img{width:92px;height:92px;border-radius:20px;display:block;margin:0 auto 14px}
+#ins h1{font-size:22px;text-align:center;margin:0 0 6px}#ins p{margin:10px 0;color:#c7d2e0}
+#ins ol{padding-left:22px;margin:10px 0}#ins li{margin:8px 0}
+#ins button,#ins a.b{display:block;width:100%;box-sizing:border-box;margin:12px 0;padding:15px;border:0;border-radius:12px;font:700 17px system-ui,sans-serif;text-align:center;text-decoration:none}
+.am{background:#FFB020;color:#0B1A2E}.gr{background:#1e3a5f;color:#fff}
+#bi{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:4;display:none;padding:15px;border:0;border-radius:12px;background:#FFB020;color:#0B1A2E;font:700 17px system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.4)}
 </style></head><body>
 <div id="sp"><i></i>SUPERVISOR</div>
 <script>
@@ -40,6 +47,29 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
   f.setAttribute('allowfullscreen','');
   var sp=document.getElementById('sp'), quita=function(){ if(sp){sp.style.opacity=0; setTimeout(function(){sp&&sp.remove();sp=null},450);} };
   f.onload=function(){ setTimeout(quita,1200) }; setTimeout(quita,12000);
+  // 26 nov: si el link de WhatsApp se abrió DENTRO de la app ENLACE (el teléfono la manda ahí), no se puede instalar SUPERVISOR desde aquí:
+  // se explica cómo abrirlo en Chrome. En Chrome normal sale el botón amarillo "Instalar SUPERVISOR".
+  var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
+  var instalada=false; try{ instalada=localStorage.getItem('sup_instalada')==='1'; }catch(e){}
+  var urlLink='https://virgiliofarias.github.io/registro/supervisor/?s='+encodeURIComponent(t);
+  if(standalone && q.get('s') && !instalada){
+    var d=document.createElement('div'); d.id='ins';
+    d.innerHTML='<img src="icon-512.png" alt=""><h1>Instala tu app SUPERVISOR</h1>'+
+      '<p>El link se abrió dentro de ENLACE. Para que SUPERVISOR quede como app aparte, con su propio ícono:</p>'+
+      '<a class="b am" id="ch" href="intent://virgiliofarias.github.io/registro/supervisor/?s='+encodeURIComponent(t)+'#Intent;scheme=https;package=com.android.chrome;end">1. Abrir en Chrome</a>'+
+      '<p>En Chrome toca el botón amarillo <b>Instalar SUPERVISOR</b> (o ⋮ › Instalar app).</p>'+
+      '<p>Si no se abrió Chrome: toca <b>Copiar link</b>, abre Chrome, pégalo arriba y entra.</p>'+
+      '<button class="gr" id="cp">Copiar link</button><button class="gr" id="sg">Usar la botonera aquí por ahora</button>';
+    document.body.appendChild(d);
+    document.getElementById('cp').onclick=function(){ var b=this; (navigator.clipboard?navigator.clipboard.writeText(urlLink):Promise.reject()).then(function(){b.textContent='✓ Copiado. Ahora pégalo en Chrome';},function(){ prompt('Copia este link:',urlLink); }); };
+    document.getElementById('sg').onclick=function(){ d.remove(); };
+  }
+  if(!standalone){
+    var bi=document.createElement('button'); bi.id='bi'; bi.textContent='📲 Instalar SUPERVISOR en mi teléfono'; document.body.appendChild(bi);
+    var ev=null; window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); ev=e; bi.style.display='block'; });
+    bi.onclick=function(){ if(ev){ ev.prompt(); ev.userChoice.then(function(){ bi.style.display='none'; }); } };
+    window.addEventListener('appinstalled',function(){ try{localStorage.setItem('sup_instalada','1')}catch(e){} bi.style.display='none'; });
+  } else if(!q.get('s')){ try{localStorage.setItem('sup_instalada','1')}catch(e){} }
   document.body.appendChild(f);
 })();
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
