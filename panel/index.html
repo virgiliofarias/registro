@@ -24,7 +24,10 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
 <div id="sp"><i></i>ENLACE PANEL</div>
 <script>
 (function(){
-  var BASE='https://script.google.com/macros/s/AKfycbzAej01sV-XGx3SDu5-0JqDROALEgcj3U56T3j1QAeGR5ucR3FyUwLVVp3pxVAB95YG/exec';
+  // 26 nov 2026: el Panel ya NO se abre dentro de script.google.com (con varias cuentas de Google en el teléfono, Google
+  // mostraba "No se puede abrir el archivo"). Ahora esta página pide el Panel a Enlace (cuenta de Jarvis) SIN cookies de Google
+  // y lo dibuja aquí; las llamadas google.script.run viajan por POST, también sin cookies. Así abre con cualquier cuenta.
+  var BASE='https://script.google.com/macros/s/AKfycbwaSoPoTUe3akwfU9uQ7awfCmj2XQ9NR5MEc8Luk85Ve42TZYY93M1nnIhoLYebYGLkoQ/exec';
   var q=new URLSearchParams(location.search), t=q.get('p'), K='enlace_panel';
   try{ if(t) localStorage.setItem(K,t); else t=localStorage.getItem(K); }catch(e){}
   if(!t){
@@ -32,14 +35,29 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
     document.body.innerHTML='<div id="m">Falta tu clave del Panel. Borra este ícono, abre otra vez el link que te pasó Claude y vuelve a instalarlo.</div>';
     return;
   }
-  // Si abrió sin ?t (ícono de Android), deja la dirección con su link para que el ícono lo recuerde.
   if(!q.get('p')){ try{ history.replaceState(null,'','?p='+encodeURIComponent(t)); }catch(e){} }
+  var sp=document.getElementById('sp'), quita=function(){ if(sp){sp.style.opacity=0; setTimeout(function(){sp&&sp.remove();sp=null},450);} };
   var f=document.createElement('iframe');
-  f.src=BASE+'?panel='+encodeURIComponent(t);
   f.allow='geolocation *; camera *; clipboard-write *';
   f.setAttribute('allowfullscreen','');
-  var sp=document.getElementById('sp'), quita=function(){ if(sp){sp.style.opacity=0; setTimeout(function(){sp&&sp.remove();sp=null},450);} };
-  f.onload=function(){ setTimeout(quita,1200) }; setTimeout(quita,12000);
+  // Puente: google.script.run → POST a Enlace sin cookies.
+  var PUENTE='<script>(function(){var B='+JSON.stringify(BASE)+';'+
+    'function corre(){var ok=function(){},ko=function(){};var p=new Proxy({},{get:function(_,n){'+
+    'if(n==="withSuccessHandler")return function(fn){ok=fn;return p};'+
+    'if(n==="withFailureHandler")return function(fn){ko=fn;return p};'+
+    'if(n==="withUserObject")return function(){return p};'+
+    'return function(){var a=[].slice.call(arguments);fetch(B,{method:"POST",credentials:"omit",body:JSON.stringify({fn:n,args:a})})'+
+    '.then(function(r){return r.json()}).then(function(j){if(j.ok)ok(j.data);else ko(new Error(j.error))})'+
+    '.catch(function(e){ko(new Error("Sin conexión con Enlace: "+e.message))})}}});return p}'+
+    'window.google={script:{get run(){return corre()}}};})();<\/script>';
+  function falla(m){ quita(); document.body.innerHTML='<div id="m">No pude abrir el Panel ('+String(m).replace(/</g,'&lt;').slice(0,160)+'). Revisa tu señal y vuelve a abrirlo.</div>'; }
+  fetch(BASE+'?panelhtml='+encodeURIComponent(t),{credentials:'omit'}).then(function(r){return r.text()}).then(function(h){
+    if(h.indexOf('panelApi')<0) throw new Error(/no v.lido/i.test(h)?'link del Panel no válido':'Enlace no respondió');
+    h=h.replace(/<head>/i,'<head>'+PUENTE);
+    f.onload=function(){ setTimeout(quita,600) };
+    f.srcdoc=h;
+  }).catch(function(e){ falla(e.message||e); });
+  setTimeout(quita,15000);
   document.body.appendChild(f);
 })();
 </script></body></html>
