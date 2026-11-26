@@ -34,12 +34,31 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
   }
   // Si abrió sin ?t (ícono de Android), deja la dirección con su link para que el ícono lo recuerde.
   if(!q.get('t')){ try{ history.replaceState(null,'','?t='+encodeURIComponent(t)); }catch(e){} }
+  // 26 nov tarde: abre Enlace SIN cookies de Google (con varias cuentas en el teléfono Google mostraba "No se puede abrir el archivo").
+  // Pide la pantalla como texto, la dibuja aquí y google.script.run viaja por POST sin cookies. Si Enlace no contesta así, usa el camino de antes.
+  function sinCookies(f,url,viejo,quita){
+    var PUENTE='<script>(function(){var B='+JSON.stringify(BASE)+';'+
+      'function corre(){var ok=function(){},ko=function(){},uo;var p=new Proxy({},{get:function(_,n){'+
+      'if(n==="withSuccessHandler")return function(fn){ok=fn;return p};'+
+      'if(n==="withFailureHandler")return function(fn){ko=fn;return p};'+
+      'if(n==="withUserObject")return function(o){uo=o;return p};'+
+      'return function(){var a=[].slice.call(arguments);fetch(B,{method:"POST",credentials:"omit",body:JSON.stringify({fn:n,args:a})})'+
+      '.then(function(r){return r.json()}).then(function(j){if(j.ok)ok(j.data,uo);else ko(new Error(j.error),uo)})'+
+      '.catch(function(e){ko(new Error("Sin conexión con Enlace: "+e.message),uo)})}}});return p}'+
+      'window.google={script:{get run(){return corre()}}};})();<\/script>';
+    var listo=false;
+    fetch(url,{credentials:'omit'}).then(function(r){return r.text()}).then(function(h){
+      if(h.indexOf('<!--ENLACE-APP-->')!==0) throw new Error('sin modo nuevo');
+      h=h.slice(17); h=/<head>/i.test(h)?h.replace(/<head>/i,'<head>'+PUENTE):PUENTE+h;
+      listo=true; f.onload=function(){ setTimeout(quita,600) }; f.srcdoc=h;
+    }).catch(function(){ if(!listo){ f.onload=function(){ setTimeout(quita,1200) }; f.src=viejo; } });
+  }
   var f=document.createElement('iframe');
-  f.src=BASE+'?t='+encodeURIComponent(t);
   f.allow='geolocation *; camera *; clipboard-write *';
   f.setAttribute('allowfullscreen','');
   var sp=document.getElementById('sp'), quita=function(){ if(sp){sp.style.opacity=0; setTimeout(function(){sp&&sp.remove();sp=null},450);} };
-  f.onload=function(){ setTimeout(quita,1200) }; setTimeout(quita,12000);
+  setTimeout(quita,12000);
+  sinCookies(f,BASE+'?apphtml=index&t='+encodeURIComponent(t),BASE+'?t='+encodeURIComponent(t),quita);
   document.body.appendChild(f);
 })();
 </script></body></html>
