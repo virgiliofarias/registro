@@ -63,6 +63,14 @@ iframe{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;bottom:0;bor
     document.body.appendChild(d);
     document.getElementById('cp').onclick=function(){ var b=this; (navigator.clipboard?navigator.clipboard.writeText(urlLink):Promise.reject()).then(function(){b.textContent='✓ Copiado. Ahora pégalo en Chrome';},function(){ prompt('Copia este link:',urlLink); }); };
     document.getElementById('sg').onclick=function(){ d.remove(); };
+    // 26 nov tarde: dentro de ENLACE, SUPERVISOR no se queda pegado. Botón para volver a marcar, y al salir de la pantalla
+    // la ventana regresa sola a ENLACE (registro), para que al abrir el ícono de ENLACE el trabajador vea su pantalla de marcar.
+    var vb=document.createElement('button'); vb.id='vb'; vb.textContent='← Volver a ENLACE (marcar)';
+    vb.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:6;padding:14px;border:0;border-radius:12px;background:#38E1FF;color:#0B1A2E;font:700 17px system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.4)';
+    var aEnlace=function(){ location.replace('../'); };
+    vb.onclick=aEnlace; document.body.appendChild(vb);
+    document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') aEnlace(); });
+    window.addEventListener('pagehide',aEnlace);
   }
   if(!standalone){
     var bi=document.createElement('button'); bi.id='bi'; bi.textContent='📲 Instalar SUPERVISOR en mi teléfono'; document.body.appendChild(bi);
